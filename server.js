@@ -23,9 +23,9 @@ app.use(bodyparser.json());
 //Connect to MOngo Db
 
 mongoose
-.connect(db)
-.then(()=>console.log('MongoDB Connected'))
-.catch(err=>console.log(err));
+.connect(db,{ useNewUrlParser: true })
+// .then(()=>console.log('MongoDB Connected'))
+// .catch(err=>console.log(err));
 
 app.get('/', (req, res)=>res.send('hello world'));
 
