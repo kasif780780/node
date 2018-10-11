@@ -4,6 +4,7 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
+const  passport = require('passport');        
 // const mongoose = require('mongoose');
 
 
@@ -84,7 +85,7 @@ User.findOne({email})
             const payload = {id:user.id, name:user.name,avatar:user.avatar} //Create jwt payload
             jwt.sign(payload,keys.secretOrKey,{expiresIn:3600},(err,token) =>{
 
-                res.json({success:true, token: 'Bearer' + token});
+                res.json({success:true, token: 'Bearer ' + token});
 
 
             });
@@ -97,6 +98,17 @@ User.findOne({email})
         }
 
      })
+   });
+});
+
+// @route Get Api User/current
+// @desc  return current user
+// @access Private 
+router.get('/current',passport.authenticate('jwt',{session:false}),(req, res)=>{
+   res.json({
+       id:req.user.id,
+       name:req.user.name,
+       email:req.user.email
    });
 });
 module.exports=router;
