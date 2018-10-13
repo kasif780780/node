@@ -5,9 +5,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const  passport = require('passport');        
-// const mongoose = require('mongoose');
 
 
+//Load Input Validation
+// const validateRegisterInput = require('../../validation/register');
 
 // LOAD USER model
 
@@ -26,7 +27,10 @@ router.get('/test',(req,res)=>res.json({msg:"User WOrks "}));
 
 
    
-router.post('/register',(req, res) =>{ console.log(req)
+router.post('/register',(req, res) =>{
+
+    
+
     User.findOne({email:req.body.email})
     .then(user=>{
         if(user){
